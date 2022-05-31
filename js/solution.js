@@ -32,36 +32,39 @@ p.innerHTML = '////////////////////////// Task2 //////////////////////////';
 
 
 //Array
-const arrayTwo = [1,2,3,6,34535,635634, [1,3,4,1,23]];
+const arrayTwo = [1,2,3,6,34535,635634, [1,3,4,1,[1,4,2],23]];
 
 //Main UL
 let ul = document.createElement('ul');
 
 //Function
-const generateListTwo = (arrayTwo, elem) => {
+const generateUl = (arrayTwo) => {
+    const generateListTwo = (arrayTwo, elem) => {
 
-    //Цыкл
-    for(let i = 0; arrayTwo.length > i; i += 1){
-        //Create li
-        let li = document.createElement('li');
+        //Цыкл
+        for(let i = 0; arrayTwo.length > i; i += 1){
+            //Create li
+            let li = document.createElement('li');
 
-        //Проверка на масив в нутри масива
-        if(Array.isArray(arrayTwo[i])){
-            let ulInLi = document.createElement('ul');
-            li.append(generateListTwo(arrayTwo[i], ulInLi));
+            //Проверка на масив в нутри масива
+            if(Array.isArray(arrayTwo[i])){
+                let ulInLi = document.createElement('ul');
+                li.append(generateListTwo(arrayTwo[i], ulInLi));
 
-        }else{
-            //наполнение текстом li
-            li.innerHTML = arrayTwo[i];
+            }else{
+                //наполнение текстом li
+                li.innerHTML = arrayTwo[i];
+            }
+            //наполнение ul елементами li
+            elem.append(li);
         }
-        //наполнение ul елементами li
-        elem.append(li);
+
+        return elem;
+
     }
 
-    return elem;
-
+    return generateListTwo(arrayTwo, ul);
 }
 
-let generatedListTwo = generateListTwo(arrayTwo, ul);
-
-document.body.append(generatedListTwo);
+let generatedUl = generateUl(arrayTwo);
+document.body.append(generatedUl);
